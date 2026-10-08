@@ -263,10 +263,9 @@ def _extract_docstring(node: ast.FunctionDef) -> Optional[str]:
     if (
         node.body
         and isinstance(node.body[0], ast.Expr)
-        and isinstance(node.body[0].value, (ast.Str, ast.Constant))
+        and isinstance(node.body[0].value, ast.Constant)
     ):
-        value = node.body[0].value
-        raw = value.s if isinstance(value, ast.Str) else value.value
+        raw = node.body[0].value.value
         if isinstance(raw, str):
             return raw.strip().split("\n")[0].strip()
     return None
